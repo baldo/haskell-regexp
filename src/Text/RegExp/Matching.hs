@@ -74,7 +74,10 @@ partialMatch (RegExp r) = matchW (arb `seqW` weighted r `seqW` arb)
 
 matchW :: Semiring w => RegW w c -> [c] -> w
 matchW r []     = empty r
-matchW r (c:cs) = final (foldl (shiftW zero) (shiftW one r c) cs)
+matchW r (c:cs) = go (shiftW one r c) cs
+ where go r' []       = final r'
+       go r' (c':cs') | active r' = go (shiftW zero r' c') cs'
+                      | otherwise = zero
 
 {-# SPECIALIZE matchW :: RegW Bool c -> [c] -> Bool #-}
 {-# SPECIALIZE matchW :: RegW (Numeric Int) c -> [c] -> Numeric Int #-}
