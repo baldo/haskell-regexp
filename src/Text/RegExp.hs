@@ -43,17 +43,7 @@ module Text.RegExp (
 
   -- * Matching
 
-  (=~), acceptFull, acceptPartial, matchingCount, fullMatch, partialMatch,
-
-  -- * Step by step matching
-
-  RegExpS,
-
-  convertS, weightedS,
-
-  shiftS,
-
-  activeS, emptyS, finalS,
+  (=~), acceptFull, acceptPartial, matchingCount, fullMatch, partialMatch
 
   ) where
 

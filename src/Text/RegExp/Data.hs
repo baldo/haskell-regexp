@@ -20,35 +20,6 @@ data RegW w c = RegW { active :: !Bool,
 final :: Semiring w => RegW w c -> w
 final r = if active r then final_ r else zero
 
--- | Regular expressions for step by step matching.
---
-newtype RegExpS w c = RegExpS (RegW w c)
-
--- | Convert a regular expression for step by step matching.
---
-convertS :: Semiring w => RegExp c -> RegExpS w c
-convertS (RegExp r) = RegExpS r
-
--- | Convert a regular expression for weighted step by step matching.
---
-weightedS :: Weight a b w => RegExp a -> RegExpS w b
-weightedS (RegExp r) = RegExpS $ weighted r
-
--- | Checks if the regular expression contains marks.
---
-activeS :: Semiring w => RegExpS w c -> Bool
-activeS (RegExpS r) = active r
-
--- | Checks if the regular expression matches the empty word.
---
-emptyS :: Semiring w => RegExpS w c -> w
-emptyS (RegExpS r) = empty r
-
--- | Checks if the regular expression is in a final state.
---
-finalS :: Semiring w => RegExpS w c -> w
-finalS (RegExpS r) = final r
-
 data Reg w c = Eps
              | Sym String (c -> w)
              | Alt (RegW w c) (RegW w c)

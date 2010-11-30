@@ -86,15 +86,6 @@ matchW r (c:cs) = go (shiftW one r c) cs
 {-# SPECIALIZE matchW :: RegW Longest c -> [c] -> Longest #-}
 {-# SPECIALIZE matchW :: RegW LeftLong (Int,c) -> [(Int,c)] -> LeftLong #-}
 
--- |
--- Does a single matching step.
---
--- For correct matching pass 'one' ('True' for 'Bool') in the first matching
--- step and 'zero' ('False') in the following steps.
---
-shiftS :: Semiring w => w -> RegExpS w c -> c -> RegExpS w c
-shiftS w (RegExpS r) c = RegExpS $ shiftW w r c
-
 shiftW :: Semiring w => w -> RegW w c -> c -> RegW w c
 shiftW w r c | active r || w /= zero = shift w (reg r) c
              | otherwise             = r
