@@ -76,7 +76,7 @@ matchW :: Semiring w => RegW w c -> [c] -> w
 matchW r []     = empty r
 matchW r (c:cs) = go (shiftW one r c) cs
  where go r' []       = final r'
-       go r' (c':cs') | active r' = go (shiftW zero r' c') cs'
+       go r' (c':cs') | active r' = go (shift zero (reg r') c') cs'
                       | otherwise = zero
 
 {-# SPECIALIZE matchW :: RegW Bool c -> [c] -> Bool #-}
